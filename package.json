@@ -1,15 +1,13 @@
 {
-  "name": "mad-egg-proxy",
+  "name": "madegg-proxy",
   "version": "1.0.0",
-  "description": "MadEgg Proxy with Time, Bookmarks, and Search History Spammer",
+  "description": "MadEgg Proxy Server",
   "main": "proxy-server.js",
   "scripts": {
     "start": "node proxy-server.js"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "http-proxy-middleware": "^2.0.1"
-  },
-  "author": "",
-  "license": "ISC"
+    "express": "^4.18.2",
+    "http-proxy-middleware": "^3.0.0"
+  }
 }
