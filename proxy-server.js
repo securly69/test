@@ -8,9 +8,13 @@ app.use(cors());
 app.use(
   "/proxy",
   createProxyMiddleware({
-    target: "",
+    target: "https://google.com", // Default target (won't be used)
+    router: (req) => {
+      const targetUrl = req.query.url; // Example: /proxy?url=https://example.com
+      return targetUrl || "https://google.com"; // Fallback target
+    },
     changeOrigin: true,
-    selfHandleResponse: true, // Allows us to modify the response
+    selfHandleResponse: true,
     onProxyRes: (proxyRes, req, res) => {
       let body = [];
       proxyRes.on("data", (chunk) => {
