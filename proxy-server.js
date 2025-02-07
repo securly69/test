@@ -9,7 +9,7 @@ app.use(express.static('public'));
 
 // Set up proxy middleware (modify target as needed)
 app.use('/proxy', createProxyMiddleware({
-  target: 'https://example.com', // Change to your desired target URL
+  target: 'https://example.com', // Change this to your desired target URL
   changeOrigin: true,
   pathRewrite: {
     '^/proxy': ''
