@@ -1,66 +1,67 @@
-const express = require('express');
-const { createProxyMiddleware } = require('http-proxy-middleware');
-const path = require('path');
+const http = require("http");
+const https = require("https");
+const fs = require("fs");
+const path = require("path");
+const url = require("url");
+const mime = require("mime");
+const { URL } = require("url");
 
-const app = express();
+const MAX_USERS = 2;
+let activeUsers = 0;
 
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
+function checkUserLimit(req, res) {
+  if (activeUsers >= MAX_USERS) {
+    res.statusCode = 503;
+    res.end("Server is at full capacity. Please try again later.");
+    return false;
+  }
+  return true;
+}
 
-// Proxy endpoint to forward requests to target URL
-app.use('/proxy', (req, res, next) => {
-    const targetUrl = req.query.url;
+const proxyServer = http.createServer((req, res) => {
+  if (!checkUserLimit(req, res)) return;
+
+  const parsedUrl = url.parse(req.url, true);
+  const targetUrl = parsedUrl.query.url;
+  const targetHost = new URL(targetUrl).host;
+
+  activeUsers++;
+
+  res.setHeader("Access-Control-Allow-Origin", "*");
+
+  if (parsedUrl.pathname.startsWith("/proxy")) {
     if (targetUrl) {
-        const proxy = createProxyMiddleware({
-            target: targetUrl,
-            changeOrigin: true,
-            pathRewrite: {
-                '^/proxy': '', // Rewrite /proxy to the actual target URL
-            },
-            onProxyRes: (proxyRes, req, res) => {
-                // Handle CSS links
-                if (proxyRes.headers['content-type'] && proxyRes.headers['content-type'].includes('text/css')) {
-                    let body = [];
-                    proxyRes.on('data', (chunk) => {
-                        body.push(chunk);
-                    });
+      const protocol = targetUrl.startsWith("https") ? https : http;
+      protocol.get(targetUrl, (targetRes) => {
+        // Handle response types to prevent issues with MIME types
+        res.statusCode = targetRes.statusCode;
 
-                    proxyRes.on('end', () => {
-                        body = Buffer.concat(body).toString();
-                        body = body.replace(/url\(([^)]+)\)/g, (match, url) => {
-                            // Rewrite the URL to go through the proxy
-                            if (!url.startsWith('http')) {
-                                return match;
-                            }
-                            const newUrl = '/proxy?url=' + encodeURIComponent(url);
-                            return `url(${newUrl})`;
-                        });
-                        res.set(proxyRes.headers);
-                        res.status(proxyRes.statusCode).end(body);
-                    });
-                } else {
-                    res.set(proxyRes.headers);
-                    res.status(proxyRes.statusCode).end(proxyRes.body);
-                }
-            },
-            onError: (err, req, res) => {
-                console.error('Proxy error:', err);
-                res.status(500).send('Proxy encountered an error.');
-            },
-            // Additional handling for WebSocket (YouTube)
-            ws: true,
-            changeOrigin: true,
+        // Set the Content-Type from the target response headers, or set a default
+        const contentType = targetRes.headers["content-type"] || "text/html";
+        res.setHeader("Content-Type", contentType);
+
+        // Proxy the target response body
+        targetRes.pipe(res);
+
+        targetRes.on("end", () => {
+          activeUsers--;
         });
-
-        // Forward the request to the proxy
-        proxy(req, res, next);
+      }).on("error", (e) => {
+        res.statusCode = 500;
+        res.end("Error retrieving the page");
+        activeUsers--;
+      });
     } else {
-        res.status(400).send('URL is required');
+      res.statusCode = 400;
+      res.end("Missing target URL parameter");
     }
+  } else {
+    res.statusCode = 404;
+    res.end("Not found");
+    activeUsers--;
+  }
 });
 
-// Listen on a dynamic port assigned by Vercel
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Proxy server running at http://localhost:${port}`);
+proxyServer.listen(8080, () => {
+  console.log("Proxy server is listening on port 8080");
 });
