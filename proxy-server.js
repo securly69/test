@@ -5,6 +5,11 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 
+// Root route to prevent "Cannot GET /"
+app.get("/", (req, res) => {
+  res.send("Proxy server is running. Use /proxy?url=YOUR_URL");
+});
+
 app.use(
   "/proxy",
   createProxyMiddleware({
