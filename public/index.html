@@ -402,7 +402,7 @@
   <div class="f-nav">
     <div id="icon-container">
       <a class="icon" href="/./">
-        <img alt="nav" id="INImg" src="https://png.pngtree.com/png-clipart/20230520/original/pngtree-angry-eggs-png-image_9166378.png" />
+        <img alt="nav" id="INImg" src="https://images.unsplash.com/photo-1605043008033-b49f3791b54e" />
       </a>
     </div>
     <div class="f-nav-right">
@@ -424,12 +424,12 @@
 
     <!-- Bookmarks -->
     <div class="bookmarks" id="bookmarks">
-      <a href="https://www.youtube.com" class="bookmark" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" alt="YouTube" />
+      <a href="/proxy?url=https://www.youtube.com" class="bookmark" target="_blank">
+        <img src="https://images.unsplash.com/photo-1556992216-34d22a3fd57f" alt="YouTube" />
         <span>YouTube</span>
       </a>
-      <a href="https://twitter.com" class="bookmark" target="_blank">
-        <img src="https://cdn.freebiesupply.com/logos/large/2x/twitter-3-logo-png-transparent.png" alt="Twitter" />
+      <a href="/proxy?url=https://twitter.com" class="bookmark" target="_blank">
+        <img src="https://images.unsplash.com/photo-1604488672710-f3a823c66b39" alt="Twitter" />
         <span>Twitter</span>
       </a>
     </div>
@@ -474,7 +474,7 @@
       const url = document.getElementById('bookmark-url').value;
       if (name && url) {
         const bookmark = document.createElement('a');
-        bookmark.href = url;
+        bookmark.href = `/proxy?url=${url}`;
         bookmark.classList.add('bookmark');
         bookmark.target = '_blank';
         bookmark.innerHTML = `<img src="https://www.google.com/s2/favicons?domain=${url}" alt="${name}">
@@ -486,13 +486,13 @@
       }
     });
 
-    // Search Form Handling
+    // Search Form Handling (Through Proxy)
     const searchForm = document.getElementById('search-form');
     searchForm.addEventListener('submit', function (e) {
       e.preventDefault();
       const searchQuery = document.getElementById('search-input').value;
       if (searchQuery) {
-        window.open(searchQuery, '_blank');
+        window.open(`/proxy?url=${encodeURIComponent(searchQuery)}`, '_blank');
       }
     });
 
@@ -501,30 +501,16 @@
     aboutBlankCloakerButton.addEventListener('click', () => {
       SHS();
     });
+
     function SHS() {
-      window.open("https://docs.google.com");
-      window.open("https://drive.google.com");
-      window.open("https://classroom.google.com");
-      window.open("https://classroom.google.com/u/1/a/not-turned-in/all");
-      window.open("https://slides.google.com");
-      window.open("https://google.com");
-      window.open("https://youtube.com");
-      window.open("https://www.edpuzzle.com");
-      window.open("https://www.gmail.com");
-      window.open("https://sheets.google.com");
-      window.open("https://www.google.com/search?q=12*24&sca_esv=3a3d99a76b27b006&sca_upv=1&rlz=1C1RXQR_enUS1083US1083&sxsrf=ACQVn09V_SVsiKr0Gc3aMU_yZ5-rWYiOAQ%3A1713404586665&sca_upv=1");
-      window.open("https://www.google.com/search?q=288%2F61&sca_esv=3a3d99a76b27b006&sca_upv=1");
-      window.open("https://www.google.com/search?q=formula+for+volume+of+a+cylinder");
-      window.open("https://www.google.com/search?q=formula+for+circufrence+of+a+circle");
-      window.open("https://drive.google.com/drive/u/0/");
-      window.open("https://drive.google.com/drive/u/0/my-drive");
-      window.open("https://drive.google.com/drive/u/0/starred");
-      window.open("https://drive.google.com/drive/u/0/shared-with-me");
-      window.open("https://drive.google.com/drive/u/0/trash");
-      window.open("https://mail.google.com/mail/u/0/?tab=rm&ogbl#snoozed");
-      window.open("https://mail.google.com/mail/u/0/?tab=rm&ogbl#drafts");
-      window.open("https://mail.google.com/mail/u/0/?tab=rm&ogbl#sent");
-      window.open("https://www.google.com/search?q=calculator");
+      const urls = [
+        "https://docs.google.com", "https://drive.google.com", "https://classroom.google.com",
+        "https://slides.google.com", "https://google.com", "https://youtube.com", "https://www.edpuzzle.com",
+        "https://www.gmail.com", "https://sheets.google.com"
+      ];
+      urls.forEach(url => {
+        window.open(`/proxy?url=${encodeURIComponent(url)}`);
+      });
     }
   </script>
 </body>
