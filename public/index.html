@@ -33,14 +33,22 @@
 
     <!-- Bookmarks -->
     <div class="bookmarks" id="bookmarks">
-      <a href="/proxy?url=https://www.youtube.com" class="bookmark" target="_blank">
-        <img src="https://www.google.com/s2/favicons?domain=https://www.youtube.com" alt="YouTube" />
-        <span>YouTube</span>
-      </a>
-      <a href="/proxy?url=https://twitter.com" class="bookmark" target="_blank">
-        <img src="https://www.google.com/s2/favicons?domain=https://twitter.com" alt="Twitter" />
-        <span>Twitter</span>
-      </a>
+      <a href="/proxy?url=https://www.youtube.com" class="bookmark">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" alt="YouTube">
+                <span>YouTube</span>
+            </a>
+            <a href="/proxy?url=https://twitter.com" class="bookmark">
+                <img src="https://cdn.freebiesupply.com/logos/large/2x/twitter-3-logo-png-transparent.png" alt="Twitter">
+                <span>Twitter</span>
+            </a>
+            <a href="/proxy?url=https://discord.com" class="bookmark">
+                <img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png" alt="Discord">
+                <span>Discord</span>
+            </a>
+            <a href="/proxy?url=https://www.nvidia.com/en-us/geforce-now/" class="bookmark">
+                <img src="https://www.nesabamedia.com/wp-content/uploads/2022/06/GeForce-NOW-Logo-1.png" alt="GeForce Now">
+                <span>GeForce Now</span>
+            </a>
     </div>
 
     <!-- Add Bookmark Modal -->
@@ -86,7 +94,7 @@
         bookmark.href = `/proxy?url=${url}`;
         bookmark.classList.add('bookmark');
         bookmark.target = '_blank';
-        bookmark.innerHTML = `<img src="https://www.google.com/s2/favicons?domain=${url}" alt="${name}">
+        bookmark.innerHTML = `<img src="https://www.google.com/s2/favicons?sz=64&domain_url=${url}" alt="${name}">
                               <span>${name}</span>`;
         bookmarksContainer.appendChild(bookmark);
         addBookmarkModal.style.display = 'none';
