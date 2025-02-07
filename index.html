@@ -7,7 +7,7 @@
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap");
     @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-
+    
     :root {
       /* Background Variables */
       --background-image: url("https://cdn.dribbble.com/users/234525/screenshots/5853076/eggsacrosstheuniverse.jpg");
@@ -19,7 +19,6 @@
       --background-settings: #2a2a2a;
       --background-buttons: #333;
       --tab-active-background: #444;
-      --tab-inactive-background: ;
       --slider-active-background: #4caf50;
       --slider-inactive-background: #ccc;
       --nav-image: url("/./assets/media/favicon/main.png");
@@ -402,10 +401,15 @@
   <!-- Navbar -->
   <div class="f-nav">
     <div id="icon-container">
-      <a class="icon" href="/./"><img alt="nav" id="INImg" src="https://png.pngtree.com/png-clipart/20230520/original/pngtree-angry-eggs-png-image_9166378.png" /></a>
+      <a class="icon" href="/./">
+        <img alt="nav" id="INImg" src="https://png.pngtree.com/png-clipart/20230520/original/pngtree-angry-eggs-png-image_9166378.png" />
+      </a>
     </div>
     <div class="f-nav-right">
-      <a class="navbar-link" href="/./settings"><i class="fa-solid fa-gear navbar-icon settings-icon"></i><an>Set</an><an>tings</an></a>
+      <a class="navbar-link" href="/./settings">
+        <i class="fa-solid fa-gear navbar-icon settings-icon"></i>
+        <an>Set</an><an>tings</an>
+      </a>
     </div>
   </div>
 
@@ -492,7 +496,7 @@
       }
     });
 
-    // Search History Spammer (Reverted to your provided code)
+    // Search History Spammer (Using your exact provided code)
     const aboutBlankCloakerButton = document.getElementById('about-blank-cloaker');
     aboutBlankCloakerButton.addEventListener('click', () => {
       SHS();
