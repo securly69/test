@@ -1,45 +1,34 @@
-const express = require("express");
-const { createProxyMiddleware } = require("http-proxy-middleware");
-const cors = require("cors");
+const express = require('express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const path = require('path');
 
 const app = express();
-app.use(cors());
 
-// Root route to prevent "Cannot GET /"
-app.get("/", (req, res) => {
-  res.send("Proxy server is running. Use /proxy?url=YOUR_URL");
+// Serve static files from the public directory (index.html)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Proxy endpoint to dynamically forward requests
+app.use('/proxy', (req, res, next) => {
+    const targetUrl = req.query.url;
+    if (!targetUrl) {
+        return res.status(400).send('URL is required');
+    }
+
+    // Create a new proxy middleware dynamically
+    const proxy = createProxyMiddleware({
+        target: targetUrl,
+        changeOrigin: true,
+        onError: (err, req, res) => {
+            console.error('Proxy error:', err);
+            res.status(500).send('Proxy encountered an error.');
+        }
+    });
+
+    proxy(req, res, next);
 });
 
-app.use(
-  "/proxy",
-  createProxyMiddleware({
-    target: "https://google.com", // Default target (won't be used)
-    router: (req) => {
-      const targetUrl = req.query.url; // Example: /proxy?url=https://example.com
-      return targetUrl || "https://google.com"; // Fallback target
-    },
-    changeOrigin: true,
-    selfHandleResponse: true,
-    onProxyRes: (proxyRes, req, res) => {
-      let body = [];
-      proxyRes.on("data", (chunk) => {
-        body.push(chunk);
-      });
-
-      proxyRes.on("end", () => {
-        body = Buffer.concat(body);
-        res.set(proxyRes.headers);
-        res.status(proxyRes.statusCode).end(body);
-      });
-    },
-    onError: (err, req, res) => {
-      console.error("Proxy error:", err);
-      res.status(500).send("Proxy encountered an error.");
-    },
-  })
-);
-
+// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Proxy server running on port ${PORT}`);
+    console.log(`Proxy server running on port ${PORT}`);
 });
