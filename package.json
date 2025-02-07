@@ -1,16 +1,19 @@
 {
-  "name": "proxy-server",
+  "name": "web-proxy-server",
   "version": "1.0.0",
-  "description": "A simple proxy server using Express and http-proxy-middleware",
+  "description": "A simple web proxy server with user limits and static content handling",
   "main": "proxy-server.js",
   "scripts": {
     "start": "node proxy-server.js"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "http-proxy-middleware": "^3.0.0"
+    "http-proxy-middleware": "^2.0.0",
+    "mime": "^3.0.0"
   },
   "engines": {
-    "node": ">=16"
-  }
+    "node": ">=16.0.0"
+  },
+  "author": "Your Name",
+  "license": "MIT"
 }
