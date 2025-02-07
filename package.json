@@ -1,12 +1,19 @@
 {
-  "name": "embed-server",
+  "name": "mad-egg-proxy",
   "version": "1.0.0",
-  "main": "server.js",
+  "description": "MadEgg Proxy with Time, Bookmarks, and Search History Spammer",
+  "main": "proxy-server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node proxy-server.js",
+    "serve": "live-server --port=3000"
   },
   "dependencies": {
-    "puppeteer": "^19.0.0",
-    "express": "^4.17.1"
-  }
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^2.0.1"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  },
+  "author": "",
+  "license": "ISC"
 }
