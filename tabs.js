@@ -27,7 +27,7 @@ function newTab(url = "https://test-zeta-tan-52.vercel.app/" + __uv$config.prefi
   setTimeout(function (tab) {
     tab.style.marginTop = "5px";
   }, 1, tab);
-  var frame = document.createElement("embed");
+  var frame = document.createElement("iframe");
   frame.src = url;
   frame.classList.add("tab");
   frame.id = "frame" + tabId;
