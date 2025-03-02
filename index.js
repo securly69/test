@@ -1,6 +1,4 @@
-import config from './config.js';
-
-console.log('Base URL in index.js:', config.baseUrl);
+const config = require('./config.js');
 
 "use strict";
 /**
