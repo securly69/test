@@ -1,5 +1,7 @@
 import config from './config.js';
 
+console.log('Base URL in index.js:', config.baseUrl);
+
 var currentTabId = 0;
 var currentTab = 0;
 var tabIds = [];
