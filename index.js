@@ -1,5 +1,7 @@
 import config from './config.js';
 
+console.log('Base URL in index.js:', config.baseUrl);
+
 "use strict";
 /**
  * @type {HTMLFormElement}
