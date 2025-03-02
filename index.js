@@ -1,3 +1,5 @@
+import config from './config.js';
+
 "use strict";
 /**
  * @type {HTMLFormElement}
@@ -22,7 +24,7 @@ form.addEventListener("submit", async (event) => {
   
   showProxy();
 
-  newTab("https://test-zeta-tan-52.vercel.app/" + __uv$config.prefix + __uv$config.encodeUrl(url));
+  newTab(config.baseUrl + __uv$config.prefix + __uv$config.encodeUrl(url));
 });
 
 function goHome() {
