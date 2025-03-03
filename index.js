@@ -1,5 +1,3 @@
-const config = require('./config.js');
-
 "use strict";
 /**
  * @type {HTMLFormElement}
@@ -24,7 +22,7 @@ form.addEventListener("submit", async (event) => {
   
   showProxy();
 
-  newTab(config.baseUrl + __uv$config.prefix + __uv$config.encodeUrl(url));
+  newTab("https://madegg.servehttp.com" + __uv$config.prefix + __uv$config.encodeUrl(url));
 });
 
 function goHome() {
