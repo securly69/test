@@ -22,7 +22,7 @@ form.addEventListener("submit", async (event) => {
   
   showProxy();
 
-  newTab("https://madegg.servehttp.com" + __uv$config.prefix + __uv$config.encodeUrl(url));
+  newTab("https://https://test-zeta-tan-52.vercel.app" + __uv$config.prefix + __uv$config.encodeUrl(url));
 });
 
 function goHome() {
