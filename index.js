@@ -25,6 +25,10 @@ form.addEventListener("submit", async (event) => {
   newTab("https://scramjet.mercurywork.shop/scramjet/" + urlEncode(url);;
 });
 
+function urlEncode(phrase) {
+  return encodeURIComponent(phrase);
+}
+
 function goHome() {
   closeAllTabs();
   hideProxy();
