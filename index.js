@@ -22,7 +22,7 @@ form.addEventListener("submit", async (event) => {
   
   showProxy();
 
-  newTab("https://test-zeta-tan-52.vercel.app" + __uv$config.prefix + __uv$config.encodeUrl(url));
+  newTab("https://scramjet.mercurywork.shop/scramjet/" + urlEncode(url);;
 });
 
 function goHome() {
